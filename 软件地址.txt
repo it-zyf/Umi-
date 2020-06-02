@@ -1,0 +1,81 @@
+软件: \\192.168.0.203 
+  
+企业邮箱地址: https://qiye.aliyun.com/ 
+
+测试系统: 192.168.0.213   administrator   faith
+
+线上faithlog地址: http://150.109.235.95:8080/logQuerySystem/view/daily.html 
+
+
+herolog测试数据库地址: 192.168.0.218  administrator  autobuild
+
+
+
+文档提交：svn：https://192.168.0.251/svn/TechCenter/trunk/document/技术文档/平台产品设计文档
+
+
+
+windwos部署faithlog系统:     150.109.235.95  administrator  KY5TGHX45G3p
+
+Linux部署mysql集群和Nginx :   150.109.80.134  root  KY5TGHX45G3p
+
+
+nd2wW8Myi19 线上数据库密码(faithlog)
+
+
+herolog线上:http://154.8.221.75:8080/heroQuerySystem/view/singlerowroom.html
+
+
+herolog---linux
+154.8.221.75
+密码
+TeckFaithLog!@#123
+
+
+
+
+herolog线上数据库：
+bj-cdb-oinn8qhs.sql.tencentcdb.com
+62020
+TFnfe7LAmD
+
+
+繁体版faithlog:
+
+http://34.80.30.254:8080/logQuerySystem/view/login.html
+
+
+国内:
+
+http://188.131.233.8:8300/logQuerySystem/view/index.html
+
+
+34.80.30.254
+gdops5888
+T>zjxB9NrofY}2;
+
+
+
+
+herolog78上数据库：
+10.0.0.3:3306
+用户名：root
+密码：TFnfe7LAmD
+
+远程访问78：
+188.131.254.78
+Administrator
+FmVn7GgPB_zKCS.
+
+MSTSC
+
+
+http://150.109.235.95:8080/logQuerySystem/AllqueryDaily.action?startTime=2019-08-01&endTime=2019-08-01
+
+
+http://192.168.7.53:7180/cmf/home   
+
+
+
+
+

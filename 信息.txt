@@ -1,0 +1,25 @@
+
+## Thailand:
+项目部署地址:  	10.1.214.210	
+redis 地址:		10.0.39.166	port=6379	pass=kqJEkQftzaxehRc3	database=5
+mysql 地址:	jdbc:mysql://10.0.137.222:3306/analysis	username=root	password=%?Qx4i3d=E=s
+eureka地址:	http://10.1.214.210:8760/eureka/,http://10.1.214.210:8761/eureka/,http://10.1.214.210:8762/eureka/ 
+impala地址:	jdbc:impala://10.0.148.208:21050/
+
+## English
+项目部署地址:	10.27.139.39
+redis 地址:		10.27.139.39	database=5
+mysql 地址:	jdbc:mysql://10.27.139.39:3306/analysis	username=root	password=ym_!@#herojszx
+eureka地址:	http://10.27.139.39:8760/eureka/,http://10.27.139.39:8761/eureka/,http://10.27.139.39:8762/eureka/ 
+impala地址:	jdbc:impala://10.27.81.28:21050/
+
+
+Thailand  vpn:
+
+Thailand  跳转机:
+128.1.44.119 	administrator	?NpZ:h[63Ci$
+107.155.50.61	10.1.214.210	administrator	?NpZ:h[63Ci$	
+
+English 跳转机: 
+152.32.206.36.ipssh.net:33899     administrator      KvIlaYlo3HHwfA9pmTiIskvKa
+10.27.139.39		root	HKXBmBxQkK^8&rrcA9X!pom

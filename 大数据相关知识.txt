@@ -1,0 +1,15 @@
+hive(sql转换mapreduce):
+大数据之上的sql执行引擎基于磁盘计算.
+每条sql执行的第一步骤是规划.
+1.从关系型数据库扫ddl
+2.和namenode做客户端通讯进行切片计算
+3.转换jar包提交到hdfs
+4.hdfs通讯yarn实现分布式计算
+impala:
+1.基于hive的内存计算.
+2.预编译元数据.(catelog同步元数据)
+
+spark:
+基于内存计算是Hadoop的100倍
+基于磁盘计算是Hadoop的10倍以上.
+

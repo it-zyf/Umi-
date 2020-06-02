@@ -1,0 +1,98 @@
+ enum e_RankingIndex
+     {
+         e_RankingIndex_gs, //战力总榜           0                      时间    区服    战力
+         e_RankingIndex_level, //等级总榜        1
+         e_RankingIndex_money, //个人榜 财富
+         e_RankingIndex_demonstower, //万魔塔
+         e_RankingIndex_wing, //羽翼总战力          4
+         e_RankingIndex_mount, //坐骑总战力       5
+         e_RankingIndex_worship, //个人 威望
+         e_RankingIndex_arena, //竞技场
+         e_RankingIndex_legion_core, //军团榜 总战力
+         e_RankingIndex_gs_barserker, //战力 战士
+         e_RankingIndex_gs_wizard, //战力 法师
+         e_RankingIndex_gs_guardian, //战力 骑士
+         e_RankingIndex_gs_assassinator, //战力 刺客
+         e_RankingIndex_level_barserker, //等级 战士
+         e_RankingIndex_level_wizard, //等级 法师
+         e_RankingIndex_level_guardian, //等级 骑士
+         e_RankingIndex_level_assassinator, //等级 刺客
+         e_RankingIndex_equipment_main, //装备榜 总战力
+         e_RankingIndex_equipment_weapon, //装备榜 武器
+         e_RankingIndex_equipment_necklace, //装备榜 项链
+         e_RankingIndex_equipment_armor, //装备榜 衣服
+         e_RankingIndex_equipment_pants, //装备榜 裤子
+         e_RankingIndex_equipment_hat, //装备榜 头饰
+         e_RankingIndex_equipment_shoes, //装备榜 鞋子
+         e_RankingIndex_equipment_glove, //装备榜 手套
+         e_RankingIndex_equipment_ring, //装备榜 戒指
+         e_RankingIndex_equipment_earring, //装备榜 耳环
+         e_RankingIndex_mount_train, //坐骑榜 培养
+         e_RankingIndex_wing_train, //羽翼榜 培养
+         e_RankingIndex_elves_train, //精灵榜 培养
+         e_RankingIndex_belief, //个人榜 信仰
+         e_RankingIndex_element, //个人榜 符文
+         e_RankingIndex_inspiration, //个人榜 启示之魂
+         e_RankingIndex_military_rank, //个人榜 军衔
+         e_RankingIndex_achievement, //个人榜 成就
+         e_RankingIndex_illustrated, //个人榜 图鉴
+         e_RankingIndex_legion_territory, //军团榜 领地排行
+         e_RankingIndex_legion_boss, //军团榜 军团boss
+         e_RankingIndex_legion_bonfire, //军团榜 军团篝火
+         e_RankingIndex_world_boss_one, //世界BOSS boss1
+         e_RankingIndex_world_boss_two, //世界BOSS boss2
+         e_RankingIndex_world_boss_three, //世界BOSS boss3
+         e_RankingIndex_world_boss_four, //世界BOSS boss4
+         e_RankingIndex_world_boss_five, //世界BOSS boss5
+         e_RankingIndex_world_boss_six, //世界BOSS boss6
+         e_RankingIndex_world_boss_seven, //世界BOSS boss7
+         e_RankingIndex_world_elite_one, //精英讨伐 boss1
+         e_RankingIndex_world_elite_two, //精英讨伐 boss2
+         e_RankingIndex_world_elite_three, //精英讨伐 boss3
+         e_RankingIndex_world_elite_four, //精英讨伐 boss4
+         e_RankingIndex_world_elite_five, //精英讨伐 boss5
+         e_RankingIndex_world_elite_six, //精英讨伐 boss6
+         e_RankingIndex_world_elite_seven, //精英讨伐 boss7
+         e_RankingIndex_world_elite_eight, //精英讨伐 boss8
+         e_RankingIndex_elves_gs, //精灵总战力
+         e_RankingIndex_vip_level_one, //VIP榜 VIP1
+         e_RankingIndex_vip_level_five, //VIP榜 VIP5
+         e_RankingIndex_vip_level_seven, //VIP榜 VIP7
+         e_RankingIndex_recharge_rmb, //充值榜
+         e_RankingIndex_time_limit_activity_total_recharge, //限时活动累计充值排行榜
+         e_RankingIndex_time_limit_activity_total_cost, //限时活动累计消费排行榜
+         e_RankingIndex_time_limit_activity_treasure, //限时活动宝藏抽取排行榜
+         e_RankingIndex_gs_all, //跨服战力榜
+         e_RankingIndex_cross_server_plinder_guard_value, //跨服掠夺守卫值榜
+         e_RankingIndex_legion_gs_all, //跨服军团战力榜
+         e_RankingIndex_cross_ladder_score, //跨服天梯本服积分榜
+         e_RankingIndex_feather_heart, //神翎榜
+         e_RankingIndex_cross_boss_one, //跨服世界boss1
+         e_RankingIndex_cross_boss_two, //`跨服世界boss2
+         e_RankingIndex_cross_boss_three, //跨服世界boss3
+         e_RankingIndex_cross_boss_four, //跨服世界boss4
+         e_RankingIndex_cross_boss_five, //跨服世界boss5
+         e_RankingIndex_cross_boss_six, //跨服世界boss6
+         e_RankingIndex_cross_boss_seven, //跨服世界boss7
+         e_RankingIndex_cross_boss_eight, //跨服世界boss8
+         e_RankingIndex_cross_boss_nine, //跨服世界boss9
+         e_RankingIndex_cross_boss_ten, //跨服世界boss10
+         e_RankingIndex_cross_boss_eleven, //跨服世界boss11
+         e_RankingIndex_cross_boss_tweleve, //跨服世界boss12
+         e_RankingIndex_time_limit_activity_gs_up, //限时活动战力提升榜
+         e_RankingIndex_time_limit_activity_mount_up, //限时活动坐骑提升榜
+         e_RankingIndex_time_limit_activity_wing_up, //限时活动翅膀提升榜
+         e_RankingIndex_time_limit_activity_equip_up, //限时活动装备提升榜
+         e_RankingIndex_time_limit_activity_spirit_up, //限时活动精灵提升榜
+         e_RankingIndex_time_limit_activity_cross_gs_up, //跨服限时活动战力提升榜
+         e_RankingIndex_time_limit_activity_cross_mount_up, //跨服限时活动坐骑提升榜
+         e_RankingIndex_time_limit_activity_cross_wing_up, //跨服限时活动翅膀提升榜
+         e_RankingIndex_time_limit_activity_cross_equip_up, //跨服限时活动装备提升榜
+         e_RankingIndex_time_limit_activity_cross_spirit_up, //跨服限时活动精灵提升榜
+         e_RankingIndex_level_all, //跨服等级榜
+         e_RankingIndex_couple, //夫妻榜
+         e_RankingIndex_Oracle_Trial, //天启试炼
+         e_RankingIndex_cross_ladder_last_seaon, //跨服天梯上赛季王者榜
+         e_RankingIndex_cross_ladder_cur_season, //跨服天梯本赛季王者榜
+         e_RankingIndex_max
+     };

@@ -1,0 +1,272 @@
+流失任务分析:
+SELECT COUNT(d.role_id)AS num,d.task_id FROM
+(SELECT d.role_id,d.task_id from role_task_log d,
+(
+SELECT a.account_id,a.role_id,MAX(log_time) as max_log_time from role_task_log a,
+(
+SELECT
+	account_id,role_id
+FROM
+	create_role_log a
+WHERE
+	log_time BETWEEN CONCAT('2019-06-06', ' 00:00:00')
+AND CONCAT('2019-06-21', ' 23:59:59')
+
+AND account_id NOT IN (
+	SELECT
+		account_id
+	FROM
+		role_logout_log
+	WHERE
+		log_time BETWEEN DATE_SUB(
+			DATE_FORMAT('2019-06-27', '%Y-%m-%d'),
+			INTERVAL 7 DAY
+		)
+AND DATE_FORMAT('2019-06-27', '%Y-%m-%d')
+)
+)b where a.role_id=b.role_id GROUP BY a.role_id)c  where d.role_id=c.role_id and d.log_time=c.max_log_time)d GROUP BY d.task_id ORDER BY num DESC
+
+
+
+等级分布:
+SELECT rolelevel,COUNT(rolelevel),MAX(battlepoints),AVG(battlepoints) from faithlog.server_role_login  where  role_level is not null
+GROUP BY rolelevel
+
+
+拍卖行:
+
+SELECT itemid,itemnum,moneytype,sum(cast(moneyvalue as DOUBLE)) as moneyvalue from faithlog.server_auction where  auctiontype !='0' AND auctionstate ='2'
+
+
+
+GROUP BY itemid,itemnum,moneytype
+
+
+
+
+最后一个:
+select 
+tab.log_time as logTime,
+tab.activeNum, 
+tab.assistemNum,ifnull(round((tab.assistemNum/tab.activeNum),2),0.00) as participationRate,
+tab.treasureNum,ifnull(round((tab.treasureNum/tab.activeNum),2),0.00) as participationRate1,
+ifnull(round((tab.TreasureCount/tab.activeNum),2),0.00) as avgTreasureNum,
+tab.wordBossNum,ifnull(round((tab.wordBossNum/tab.activeNum),2),0.00) as participationRate2,
+tab.armyBossNum,ifnull(round((tab.armyBossNum/tab.activeNum),2),0.00) as participationRate3,
+tab.breakNum,ifnull(round((tab.breakNum/tab.activeNum),2),0.00) as participationRate4,
+tab.ManorNum,ifnull(round((tab.ManorNum/tab.activeNum),2),0.00) as participationRate5,
+tab.powerNum,ifnull(round((tab.powerNum/tab.activeNum),2),0.00) as participationRate6,
+tab.crystalNum,ifnull(round((tab.crystalNum/tab.activeNum),2),0.00) as participationRate7,
+tab.ladderNum,ifnull(round((tab.ladderNum/tab.activeNum),2),0.00) as participationRate8,
+tab.pkNum,ifnull(round((tab.pkNum/tab.activeNum),2),0.00) as participationRate9
+from
+(
+select 
+a.log_time,
+count(distinct a.role_id) as activeNum,
+count(distinct b.role_id) as assistemNum,
+count(distinct c.role_id) as treasureNum,
+ifnull(sum(c.num),0) as TreasureCount,
+count(distinct d.role_id) as wordBossNum,
+count(distinct e.role_id) as armyBossNum,
+count(distinct f.role_id) as breakNum,
+count(distinct g.role_id) as ManorNum,
+count(distinct h.role_id) as powerNum,
+count(distinct i.role_id) as crystalNum,
+count(distinct j.role_id) as ladderNum,
+count(distinct k.role_id) as pkNum
+from faith_log.server_role_login a 
+left join faith_log.server_assistant_log b on a.role_id=b.role_id
+left join faith_log.server_treasure_log c on a.role_id=c.role_id
+left join faith_log.server_beat_boss d on a.role_id=d.role_id and d.active_type='0'
+left join faith_log.server_beat_boss e on a.role_id=e.role_id and e.active_type='1'
+left join faith_log.server_beat_boss f on a.role_id=f.role_id and f.active_type='2'
+left join faith_log.server_manor_log g on a.role_id=g.role_id and g.active_type='0'
+left join faith_log.server_manor_log h on a.role_id=h.role_id and h.active_type='1'
+left join faith_log.server_crystal_log i on a.role_id=i.role_id 
+left join faith_log.server_ladder_log j on a.role_id=j.role_id
+left join faith_log.server_pk_king_log k on a.role_id = k.role_id
+
+group by a.log_time
+
+)tab
+
+
+
+
+
+
+
+
+
+
+
+
+
+select
+    tab.logTime as logTime,
+    tab.activeNum,
+    tab.assistemNum,ifnull(round((tab.assistemNum/tab.activeNum),2),0.00) as participationRate,
+    tab.treasureNum,ifnull(round((tab.treasureNum/tab.activeNum),2),0.00) as participationRate1,
+    ifnull(round((tab.TreasureCount/tab.activeNum),2),0.00) as avgTreasureNum,
+    tab.wordBossNum,ifnull(round((tab.wordBossNum/tab.activeNum),2),0.00) as participationRate2,
+    tab.armyBossNum,ifnull(round((tab.armyBossNum/tab.activeNum),2),0.00) as participationRate3,
+    tab.breakNum,ifnull(round((tab.breakNum/tab.activeNum),2),0.00) as participationRate4,
+    tab.ManorNum,ifnull(round((tab.ManorNum/tab.activeNum),2),0.00) as participationRate5,
+    tab.powerNum,ifnull(round((tab.powerNum/tab.activeNum),2),0.00) as participationRate6,
+    tab.crystalNum,ifnull(round((tab.crystalNum/tab.activeNum),2),0.00) as participationRate7,
+    tab.ladderNum,ifnull(round((tab.ladderNum/tab.activeNum),2),0.00) as participationRate8,
+    tab.pkNum,ifnull(round((tab.pkNum/tab.activeNum),2),0.00) as participationRate9
+    from
+    (
+    select
+      from_unixtime(cast(a.log_time / 1000 as bigint), 'yyyy-MM-dd') as logTime,
+    count(distinct a.role_id) as activeNum,
+    count(distinct b.role_id) as assistemNum,
+    count(distinct c.role_id) as treasureNum,
+    ifnull(sum(c.num),0) as TreasureCount,
+    count(distinct d.role_id) as wordBossNum,
+    count(distinct e.role_id) as armyBossNum,
+    count(distinct f.role_id) as breakNum,
+    count(distinct g.role_id) as ManorNum,
+    count(distinct h.role_id) as powerNum,
+    count(distinct i.role_id) as crystalNum,
+    count(distinct j.role_id) as ladderNum,
+    count(distinct k.role_id) as pkNum
+    from faith_log.server_role_login a
+    left join faith_log.server_assistant_log b on a.role_id=b.role_id
+    left join faith_log.server_treasure_log c on a.role_id=c.role_id
+    left join faith_log.server_beat_boss d on a.role_id=d.role_id and d.active_type='0'
+    left join faith_log.server_beat_boss e on a.role_id=e.role_id and e.active_type='1'
+    left join faith_log.server_beat_boss f on a.role_id=f.role_id and f.active_type='2'
+    left join faith_log.server_manor_log g on a.role_id=g.role_id and g.active_type='0'
+    left join faith_log.server_manor_log h on a.role_id=h.role_id and h.active_type='1'
+    left join faith_log.server_crystal_log i on a.role_id=i.role_id
+    left join faith_log.server_ladder_log j on a.role_id=j.role_id
+    left join faith_log.server_pk_king_log k on a.role_id = k.role_id
+     where a.server_id in
+        (
+          '10001'
+        ,
+          '10203'
+        ,
+          '10002'
+        ,
+          '10003'
+        ,
+          '123'
+        ,
+          '10089'
+        )
+        and
+      
+      
+        a.log_time between  1585584000000 and 1588175999000  
+    group by from_unixtime(cast(a.log_time / 1000 as bigint), 'yyyy-MM-dd') order by from_unixtime(cast(a.log_time / 1000 as bigint), 'yyyy-MM-dd') desc limit 30 offset 0) tab
+
+
+
+
+
+
+
+
+角色等级:
+ select rolelevel,count(distinct roleid) as num,ifnull(round(max(battlepoints),2),0),ifnull(round(avg(battlepoints),2),0) from faithlog.server_role_upgrade where role_level is not null group by rolelevel order by rolelevel 
+
+
+
+
+
+等级分布:
+
+      SELECT
+        role_level as level ,
+        COUNT(distinct role_id) as playNum ,
+        MAX(battle_points) as maxPower,
+        round(AVG(battle_points),2) as avgPower 
+        from
+       (select  role_id,max(role_level) as role_level,max(battle_points) as battle_points from faith_server.server_role_upgrade  group by role_id ) a 
+        where
+        role_level IS NOT NULL
+        GROUP BY
+        role_level
+        ORDER BY
+        role_level
+		
+		
+		
+		
+		   SELECT
+        role_level as level ,
+        COUNT(distinct role_id) as playNum ,
+        MAX(battle_points) as maxPower,
+        round(AVG(battle_points),2) as avgPower 
+        from
+       (select  role_id,max(role_level) as role_level,max(battle_points) as battle_points from faith_server.server_role_login  group by role_id ) a 
+        where
+        role_level IS NOT NULL
+        GROUP BY
+        role_level
+        ORDER BY
+        role_level
+		
+		
+新需求:
+SELECT ROUND(MAX(online_time)/60,0),log_time FROM role_logout_log  WHERE role_id ='6759713888028441653' 
+GROUP BY DATE_FORMAT(log_time,'%Y-%m-%d'),account_id,role_id ORDER BY log_time ASC		
+
+
+
+
+		
+SELECT account_id,role_id,role_name,MAX(role_level)as role_level,MAX(role_power)as role_power,ROUND(MAX(online_time)/60,2)as online_time,
+(
+CASE 
+when ROUND(MAX(online_time)/60,2) <60 then 1 
+end) as hh from
+
+
+role_logout_log GROUP BY account_id,role_id
+
+
+
+
+
+
+
+
+
+
+
+
+ select b.user_id,b.role_id,b.role_name,b.log_time,b.online_time,c.role_level,c.battle_points from 
+ 
+ (select a.user_id, a.role_id, a.role_name, a.role_level, a.battle_points,a.log_time,a.online_time from 
+ (select user_id, role_id, role_name,
+ max(role_level) as role_level, max(battle_points) as battle_points, 
+ from_timestamp(max(date_time), 'yyyy-MM-dd') as log_time, 
+ ROUND(MAX(online_time)/60,0)as online_time from 
+ faith_server.server_early_warning where server_id in ('10203') 
+ and from_timestamp(date_time, 'yyyy-MM-dd') between '2020-05-14' and '2020-05-19'
+ GROUP BY from_timestamp(date_time, 'yyyy-MM-dd') ,
+ user_id,role_id,role_name
+ )a 
+ where a.online_time< 30 or a.online_time between 30 and 400
+ order by a.user_id asc,a.role_id asc,a.log_time asc
+ )b left join (
+ select user_id,role_id,max(role_level) as role_level,max(battle_points) as battle_points from faith_server.server_early_warning where server_id in ('10203') 
+ and from_timestamp(date_time, 'yyyy-MM-dd') between '2020-05-14' and '2020-05-19'
+ GROUP BY 
+ user_id,role_id,role_name
+
+ )c on b.role_id=c.role_id 
+ order by b.user_id asc,b.role_id asc,b.log_time asc
+ 
+		
+
+
+
+
+
+

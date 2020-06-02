@@ -1,0 +1,157 @@
+SELECT
+	tab.logTime AS logTime,
+	tab.activeNum,
+	tab.assistemNum,
+	ifnull(
+		round(
+			(
+				tab.assistemNum / tab.activeNum
+			),
+			2
+		),
+		0.00
+	) AS participationRate,
+	tab.treasureNum,
+	ifnull(
+		round(
+			(
+				tab.treasureNum / tab.activeNum
+			),
+			2
+		),
+		0.00
+	) AS participationRate1,
+	ifnull(
+		round(
+			(
+				tab.TreasureCount / tab.activeNum
+			),
+			2
+		),
+		0.00
+	) AS avgTreasureNum,
+	tab.wordBossNum,
+	ifnull(
+		round(
+			(
+				tab.wordBossNum / tab.activeNum
+			),
+			2
+		),
+		0.00
+	) AS participationRate2,
+	tab.armyBossNum,
+	ifnull(
+		round(
+			(
+				tab.armyBossNum / tab.activeNum
+			),
+			2
+		),
+		0.00
+	) AS participationRate3,
+	tab.breakNum,
+	ifnull(
+		round(
+			(tab.breakNum / tab.activeNum),
+			2
+		),
+		0.00
+	) AS participationRate4,
+	tab.ManorNum,
+	ifnull(
+		round(
+			(tab.ManorNum / tab.activeNum),
+			2
+		),
+		0.00
+	) AS participationRate5,
+	tab.powerNum,
+	ifnull(
+		round(
+			(tab.powerNum / tab.activeNum),
+			2
+		),
+		0.00
+	) AS participationRate6,
+	tab.crystalNum,
+	ifnull(
+		round(
+			(
+				tab.crystalNum / tab.activeNum
+			),
+			2
+		),
+		0.00
+	) AS participationRate7,
+	tab.ladderNum,
+	ifnull(
+		round(
+			(
+				tab.ladderNum / tab.activeNum
+			),
+			2
+		),
+		0.00
+	) AS participationRate8,
+	tab.pkNum,
+	ifnull(
+		round(
+			(tab.pkNum / tab.activeNum),
+			2
+		),
+		0.00
+	) AS participationRate9
+FROM
+	(
+		SELECT
+			from_unixtime(
+				cast(a.log_time / 1000 AS BIGINT),
+				'yyyy-MM-dd'
+			) AS logTime,
+			count(DISTINCT a.role_id) AS activeNum,
+			count(DISTINCT b.role_id) AS assistemNum,
+			count(DISTINCT c.role_id) AS treasureNum,
+			ifnull(sum(c.num), 0) AS TreasureCount,
+			count(DISTINCT d.role_id) AS wordBossNum,
+			count(DISTINCT e.role_id) AS armyBossNum,
+			count(DISTINCT f.role_id) AS breakNum,
+			count(DISTINCT g.role_id) AS ManorNum,
+			count(DISTINCT h.role_id) AS powerNum,
+			count(DISTINCT i.role_id) AS crystalNum,
+			count(DISTINCT j.role_id) AS ladderNum,
+			count(DISTINCT k.role_id) AS pkNum
+		FROM
+			faith_server.server_role_login a
+		LEFT JOIN faith_server.server_assistant_log b ON a.role_id = b.role_id
+		LEFT JOIN faith_server.server_treasure_log c ON a.role_id = c.role_id
+		LEFT JOIN faith_server.server_beat_boss d ON a.role_id = d.role_id
+		AND d.active_type = '0'
+		LEFT JOIN faith_server.server_beat_boss e ON a.role_id = e.role_id
+		AND e.active_type = '1'
+		LEFT JOIN faith_server.server_beat_boss f ON a.role_id = f.role_id
+		AND f.active_type = '2'
+		LEFT JOIN faith_server.server_manor_log g ON a.role_id = g.role_id
+		AND g.active_type = '0'
+		LEFT JOIN faith_server.server_manor_log h ON a.role_id = h.role_id
+		AND h.active_type = '1'
+		LEFT JOIN faith_server.server_crystal_log i ON a.role_id = i.role_id
+		LEFT JOIN faith_server.server_ladder_log j ON a.role_id = j.role_id
+		LEFT JOIN faith_server.server_pk_king_log k ON a.role_id = k.role_id
+		WHERE
+			a.server_id IN ('10203','10089')
+		AND a.log_time BETWEEN 1587830400000
+		AND 1590422399000
+		AND a.channel_id IN ('0','8','4','3','2')
+		GROUP BY
+			from_unixtime(
+				cast(a.log_time / 1000 AS BIGINT),
+				'yyyy-MM-dd'
+			)
+		ORDER BY
+			from_unixtime(
+				cast(a.log_time / 1000 AS BIGINT),
+				'yyyy-MM-dd'
+			) DESC
+		LIMIT 30 OFFSET 0
+	) tab

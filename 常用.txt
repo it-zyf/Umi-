@@ -1,0 +1,21 @@
+win查看端口命令:
+tasklist | findstr "680"
+netstat -aon|findstr "49157"
+tskill 9001
+
+jar包安装本地仓库	
+mvn install:install-file -Dfile=ImpalaJDBC41.jar -DgroupId=com.cloudera.impala -DartifactId=jdbc -Dversion=2.6.12.1013 -Dpackaging=jar
+
+
+nohup java -jar &
+
+
+运行主类:
+com.umi.eureka.EurekaServer
+com.umi.ga.hadoop_api.main.HadoopLogApiApplication
+com.umi.ga.main.HadoopLogServerApplication
+
+
+
+
+ 
