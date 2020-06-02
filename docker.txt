@@ -41,6 +41,7 @@ docker cp tensquare_elasticsearch:/usr/share/elasticsearch/config/elasticsearch.
 3.docker rm 容器名
 4.挂载.
 目录挂载:
+
 docker run -di --name=mycentos1 centos:latest  -v usr/local/mythml:usr/local/mh --privileged=true
 
 -v usr/local/mythml:usr/local/mh 目录挂载:宿主机文件挂载到容器
