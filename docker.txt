@@ -31,9 +31,15 @@ docker run -it --name=mycentos centos:latest  /bin/bash (交互式容器,退出�
 docker run -di --name=mycentos1 centos:latest   (守护式容器)
 进入守护式容器:
 docker exec -it mycentos1 /bin/bash
-宿主机和容器拷贝:
-docker cp
 
+宿主机和容器拷贝:
+docker cp(复制之前容器必须是启动的)
+列如:
+1.复制
+docker cp tensquare_elasticsearch:/usr/share/elasticsearch/config/elasticsearch.yml  /usr/share/elasticsearch.yml  (把docker 容器中的elasticsearch.yml复制到本地)
+2.docker stop 容器名
+3.docker rm 容器名
+4.挂载.
 目录挂载:
 docker run -di --name=mycentos1 centos:latest  -v usr/local/mythml:usr/local/mh --privileged=true
 
