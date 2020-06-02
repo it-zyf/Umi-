@@ -1,0 +1,3 @@
+总控:http://center.umi-game.cn/view/index.html?NameUser=admin
+韩版faithlog:http://150.109.235.95:8080/logQuerySystem/HTMLpage/login.html
+泰版faithlog:http://107.155.50.61:9100/haddup/haddupOverview.html?NameUser=admin
