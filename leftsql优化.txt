@@ -1,0 +1,117 @@
+select 
+srl.day_time          day_time,
+srl.activeNum         activeNum,
+       ifnull(sal_count, 0)  assistemNum,
+       ifnull(round((sal_count/activeNum),2),0.00) as participationRate,
+       ifnull(stl_count, 0)  treasureNum,
+       ifnull(round((stl_count/activeNum),2),0.00) as participationRate1,
+       ifnull(sbb0_count, 0) wordBossNum,
+       ifnull(round((sbb0_count/activeNum),2),0.00) as participationRate2,
+       ifnull(sbb1_count, 0) armyBossNum,
+       ifnull(round((sbb1_count/activeNum),2),0.00) as participationRate3,
+       ifnull(sbb2_count, 0) breakNum,
+       ifnull(round((sbb2_count/activeNum),2),0.00) as participationRate4,
+       ifnull(sml0_count, 0) ManorNum,
+       ifnull(round((sml0_count/activeNum),2),0.00) as participationRate5,
+       ifnull(sml1_count, 0) powerNum,
+       ifnull(round((sml1_count/activeNum),2),0.00) as participationRate6,
+       ifnull(scl_count, 0)  crystalNum,
+       ifnull(round((scl_count/activeNum),2),0.00) as participationRate7,
+       ifnull(sll_count, 0)  ladderNum,
+       ifnull(round((sll_count/activeNum),2),0.00) as participationRate8,
+       ifnull(spkl_count, 0) pkNum,
+       ifnull(round((spkl_count/activeNum),2),0.00) as participationRate9,
+       ifnull(TreasureCount,0) TreasureCount
+from (
+         select day_time,count(distinct role_id) as activeNum
+         from faith_server.server_role_login
+         where day_time
+             BETWEEN 20200508
+             AND 20200605
+           and channel_id in ('2000', '1000')
+           and server_id in ('10002', '10003')
+         GROUP BY day_time
+     ) srl
+         left join (
+    select day_time, count(distinct role_id) sal_count
+    from faith_server.server_assistant_log
+    where day_time
+        BETWEEN 20200508
+        AND 20200605
+      and channel_id in ('2000', '1000')
+      and server_id in ('10002', '10003')
+    GROUP BY day_time
+) sal on srl.day_time = sal.day_time
+         left join (
+    select day_time, count(distinct role_id) stl_count,sum(num) TreasureCount
+    from faith_server.server_treasure_log
+    where day_time
+        BETWEEN 20200508
+        AND 20200605
+      and channel_id in ('2000', '1000')
+      and server_id in ('10002', '10003')
+    GROUP BY day_time
+) stl on srl.day_time = stl.day_time
+         left join (
+    select day_time,
+           sum(if(active_type = '0', sbb_count, 0)) sbb0_count,
+           sum(if(active_type = '1', sbb_count, 0)) sbb1_count,
+           sum(if(active_type = '2', sbb_count, 0)) sbb2_count
+    from (
+             select day_time, active_type, count(distinct role_id) sbb_count
+             from faith_server.server_beat_boss
+             where day_time
+                 BETWEEN 20200508
+                 AND 20200605
+               and channel_id in ('2000', '1000')
+               and server_id in ('10002', '10003')
+             GROUP BY day_time, active_type
+         ) ll
+    group by day_time
+) sbb on srl.day_time = sbb.day_time
+         left join (
+    select day_time,
+           sum(if(active_type = '0', sml_count, 0)) sml0_count,
+           sum(if(active_type = '1', sml_count, 0)) sml1_count
+    from (
+             select day_time, active_type, count(distinct role_id) sml_count
+             from faith_server.server_manor_log
+             where day_time
+                 BETWEEN 20200508
+                 AND 20200605
+               and channel_id in ('2000', '1000')
+               and server_id in ('10002', '10003')
+             GROUP BY day_time, active_type
+         ) ll
+    group by day_time
+) sml on srl.day_time = sml.day_time
+         left join (
+    select day_time, count(distinct role_id) scl_count
+    from faith_server.server_crystal_log
+    where day_time
+        BETWEEN 20200508
+        AND 20200605
+      and channel_id in ('2000', '1000')
+      and server_id in ('10002', '10003')
+    GROUP BY day_time
+) scl on srl.day_time = scl.day_time
+         left join (
+    select day_time, count(distinct role_id) sll_count
+    from faith_server.server_ladder_log
+    where day_time
+        BETWEEN 20200508
+        AND 20200605
+      and channel_id in ('2000', '1000')
+      and server_id in ('10002', '10003')
+    GROUP BY day_time
+) sll on srl.day_time = sll.day_time
+         left join (
+    select day_time, count(distinct role_id) spkl_count
+    from faith_server.server_pk_king_log
+    where day_time
+        BETWEEN 20200508
+        AND 20200605
+      and channel_id in ('2000', '1000')
+      and server_id in ('10002', '10003')
+    GROUP BY day_time
+) spkl on srl.day_time = spkl.day_time order by day_time desc;
