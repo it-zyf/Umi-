@@ -1,0 +1,12 @@
+sqluuid函数:REPLACE(UUID(),"-","")
+
+CREATE TABLE `dahtsys_d_dyfl`(
+	`dmid` VARCHAR (4) NOT NULL COMMENT '代码表id',
+	`dmmc` VARCHAR (128) DEFAULT NULL COMMENT '代码表名称',
+	`sfky` VARCHAR (1) DEFAULT NULL COMMENT '是否可用',
+	`xh` INT (2) DEFAULT NULL COMMENT '序号',
+	PRIMARY KEY (`dmid`)
+) ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT='地域分类';
+
+给表加注释：
+ALTER TABLE table_name COMMENT='这是表的注释';
