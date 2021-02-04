@@ -1,0 +1,4 @@
+elasticsearch:https://www.elastic.co/cn/downloads/elasticsearch
+elasticsearch-head:git://github.com/mobz/elasticsearch-head.git
+kibana:https://www.elastic.co/cn/downloads/kibana
+ÖÐÎÄik·Ö´ÊÆ÷:https://github.com/medcl/elasticsearch-analysis-ik
