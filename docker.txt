@@ -63,5 +63,28 @@ cd /var/lib/docker/devicemapper/mnt/faa9181bbb365d1057d40616e9cb2814d6b2754729bb
 
 docker映射挂载:
  docker run -di -p 9009:8080 --name=tomcat2 --privileged=true -v /usr/local/webapps:/usr/local/tomcat/webapps/ tomcat:latest
+ 
+ 
+ dockerfile生成docker容器:
+ docker build -t local-portal . 
+ docker run  -di --name local-portal --network=host -p 8003:8003 local-portal:latest
+ 
+ 查看docker日志:
+docker logs --since 30m b4ff25f2043e
+docker logs -f --tail=10  local-portal
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
 
